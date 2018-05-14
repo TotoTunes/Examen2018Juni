@@ -12,8 +12,8 @@ import utilities.Generator;
 import utilities.VoornaamEnum;
 
 /**
- * @author Bart Taelemans & Thomas Vanden Bossche
- * @date 1 jan. 2018
+ * @author Thomas Vanden Bossche
+ * @date 14 mei. 2018
  * @project Afstandsbediening
  * @purpose test Generator
  *

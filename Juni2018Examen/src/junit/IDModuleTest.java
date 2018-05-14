@@ -12,8 +12,8 @@ import model.IDModule;
 import model.User;
 
 /**
- * @author Bart Taelemans & Thomas Vanden Bossche
- * @date 2 jan. 2018
+ * @author Thomas Vanden Bossche
+ * @date 14 mei. 2018
  * @project Afstandsbediening
  * @purpose Run test on class IDModule
  *

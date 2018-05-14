@@ -10,8 +10,8 @@ import db.DAO;
 import utilities.Generator;
 
 /**
- * @author Bart Taelemans & Thomas Vanden Bossche
- * @date 1 jan. 2018
+ * @author Thomas Vanden Bossche
+ * @date 14 mei. 2018
  * @project Afstandsbediening
  * @purpose Class voor subject in observer pattern
  *
