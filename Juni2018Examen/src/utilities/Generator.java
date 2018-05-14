@@ -16,7 +16,7 @@ import model.User;
 
 public class Generator
 {
-
+	// generator maken voor willekeurige auto's/ gebruikers aan te maken zie Practicum 5
 	private static Random rand = new Random();
 	private static ArrayList<Double> FrequencyList = new ArrayList<Double>();
 

@@ -10,7 +10,9 @@ package model;
 
 public class User implements IObserver
 {
-
+	//Voorzie een random generator die iedere gebruiker een aantal keren aanbiedt aan de poort. 
+	//Nadat het aantal verstreken is, beëindigt de gebruiker zijn activiteiten. Dus de thread sterft.
+	
 	private boolean acces;
 	private double frequency;
 	private String lastName;

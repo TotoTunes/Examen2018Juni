@@ -23,7 +23,18 @@ import org.apache.logging.log4j.LogManager;
 @SuppressWarnings("serial")
 public class AfstandsbedieningTest extends JComponent
 {
-
+	
+//	a. Random een aantal gebruikers worden aangemaakt en geregistreerd (rechthebbenden). 
+//	Bewaren in de database mag maar moet niet.
+	
+//	b. De-activeer random een gebruiker.
+	
+//	c. Activeer random een gebruiker
+	
+//	d. Stuur een signaal naar de beheerder om de poort te openen.
+//		d.i. vanuit een geregistreerde gebruiker
+//		d.ii. vanuit een niet geregistreerde gebruiker
+	
 	public final static Logger LOGGER = LogManager.getLogger(AfstandsbedieningTest.class.getName());
 
 	public static void main(String[] args) throws IOException, SQLException
