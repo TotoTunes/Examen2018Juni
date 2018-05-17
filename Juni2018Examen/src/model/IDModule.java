@@ -17,7 +17,7 @@ import utilities.Generator;
  *
  */
 
-public class IDModule implements ISubject
+public class IDModule implements ISubject, Runnable
 {
 
 	private ArrayList<User> UserList;
@@ -215,6 +215,12 @@ public class IDModule implements ISubject
 	public void setDb(DAO db)
 	{
 		this.db = db;
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

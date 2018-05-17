@@ -8,7 +8,7 @@ package model;
  *
  */
 
-public class User implements IObserver
+public class User implements IObserver, Runnable
 {
 	//Voorzie een random generator die iedere gebruiker een aantal keren aanbiedt aan de poort. 
 	//Nadat het aantal verstreken is, beëindigt de gebruiker zijn activiteiten. Dus de thread sterft.
@@ -116,5 +116,11 @@ public class User implements IObserver
 	{
 		String beschrijving = firstName + " " + lastName + " " + frequency +" " +isAcces() + "\n";
 		return beschrijving;
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
 	}
 }

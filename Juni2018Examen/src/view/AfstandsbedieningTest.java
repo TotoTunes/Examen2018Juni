@@ -56,6 +56,7 @@ public class AfstandsbedieningTest extends JComponent
 				switch (keuze)
 				{
 
+				// aanmaken van willekeurige users 
 				case 1:
 					StringBuffer alles = new StringBuffer();
 					for (int i = 0; i < 20; ++i)
@@ -68,6 +69,7 @@ public class AfstandsbedieningTest extends JComponent
 					LOGGER.info("Er zijn 20 willekeurige gebruikers aangemaakt, er zitten nu "
 							+ module.getUserList().size() + " in de database." + System.lineSeparator());
 					break;
+					// specifieke user deactiveren/activeren 
 				case 2:
 					String achternaam = JOptionPane.showInputDialog("Geef een naam in: ");
 					int g = Integer.parseInt(JOptionPane.showInputDialog(module.GetSpecificUser(achternaam)
@@ -92,6 +94,8 @@ public class AfstandsbedieningTest extends JComponent
 						}
 					}
 					break;
+					
+					// frequentie van de poort veranderen 
 				case 3:
 					module.setPermittedFrequency(Generator.Randomfrequency());
 					JOptionPane.showMessageDialog(null,
@@ -99,6 +103,7 @@ public class AfstandsbedieningTest extends JComponent
 					LOGGER.info("De poort heeft deze frequentie gekregen: " + module.getPermittedFrequency()
 							+ System.lineSeparator());
 					break;
+					// gebruiker toevoegen
 				case 4:
 					String lastname = JOptionPane.showInputDialog("Geef de achternaam in");
 					String firstname = JOptionPane.showInputDialog("Geef de voornaam in");
@@ -106,7 +111,7 @@ public class AfstandsbedieningTest extends JComponent
 					LOGGER.info(
 							"Volgende gebruiker is toegevoegd: " + firstname + " " + lastname + System.lineSeparator());
 					break;
-
+					// Poort openen
 				case 5:
 					String achternaam1 = JOptionPane.showInputDialog("Geef een naam in: ");
 					int g1 = Integer.parseInt(JOptionPane.showInputDialog(module.GetSpecificUser(achternaam1)
@@ -121,11 +126,12 @@ public class AfstandsbedieningTest extends JComponent
 					} // uit db
 
 					break;
-
+					// alle users tonen
 				case 6:
 					JOptionPane.showMessageDialog(null, module.allToString());
 
 					break;
+					// frequentie van alle users updaten 
 				case 7:
 					module.notifyAll(module.getUserList());
 					JOptionPane.showMessageDialog(null, "Alle gebruikers met toegang hebben een nieuwe frequentie");
