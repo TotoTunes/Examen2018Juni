@@ -44,6 +44,7 @@ public class AfstandsbedieningTest extends JComponent
 
 		int r = 1;
 		Executor executor = Executors.newCachedThreadPool();
+		
 		IDModule module = new IDModule();
 		try
 		{
@@ -79,7 +80,6 @@ public class AfstandsbedieningTest extends JComponent
 							+ "\n Geef het nummer in van de persoon die je wilt (de)activeren\n EXIT =0"));
 					if (g > 0)
 					{
-						// module.removeObserver(module.GetSpecificUser(g - 1, module.getSearch()));
 						User userToChange = module.GetSpecificUser(g - 1, module.getSearch());
 						if (userToChange.isAcces() == true)
 						{

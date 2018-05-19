@@ -74,13 +74,13 @@ public class IDModule implements ISubject  {
 	// synchronized methods omdat arraylist mutable is en zo worden er geen foute
 	// gegevens uitgelezen
 	@Override
-	public synchronized void removeObserver(User user) throws IOException, SQLException {
+	public void removeObserver(User user) throws IOException, SQLException {
 		user.setAcces(false);
 		db.removeDB(user);
 	}
 
 	@Override
-	public synchronized void addObserver(User user) throws IOException, SQLException {
+	public void addObserver(User user) throws IOException, SQLException {
 		if (UserList.contains(user)) {
 			user.setAcces(true);
 			db.setAccessTrue(user);
@@ -91,7 +91,7 @@ public class IDModule implements ISubject  {
 	}
 
 	@Override
-	public synchronized void updateObserver(double frequency, User user) throws SQLException, IOException {
+	public void updateObserver(double frequency, User user) throws SQLException, IOException {
 		if (user.isAcces() == true) {
 			user.handleNotification(frequency);
 			db.updateDB(frequency);
@@ -99,7 +99,7 @@ public class IDModule implements ISubject  {
 	}
 
 	@Override
-	public synchronized void notifyAll(ArrayList<User> arrayList) throws SQLException, IOException {
+	public void notifyAll(ArrayList<User> arrayList) throws SQLException, IOException {
 		for (User user : arrayList) {
 			updateObserver(getPermittedFrequency(), user);
 		}

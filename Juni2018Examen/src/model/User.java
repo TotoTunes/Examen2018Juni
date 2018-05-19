@@ -8,11 +8,12 @@ package model;
  *
  */
 
-public class User implements IObserver, Runnable
-{
-	//Voorzie een random generator die iedere gebruiker een aantal keren aanbiedt aan de poort. 
-	//Nadat het aantal verstreken is, beëindigt de gebruiker zijn activiteiten. Dus de thread sterft.
-	
+public class User implements IObserver, Runnable {
+	// Voorzie een random generator die iedere gebruiker een aantal keren aanbiedt
+	// aan de poort.
+	// Nadat het aantal verstreken is, beëindigt de gebruiker zijn activiteiten. Dus
+	// de thread sterft.
+
 	private boolean acces;
 	private double frequency;
 	private String lastName;
@@ -21,8 +22,7 @@ public class User implements IObserver, Runnable
 	/**
 	 * @return the firstName
 	 */
-	public String getFirstName()
-	{
+	public String getFirstName() {
 		return firstName;
 	}
 
@@ -30,16 +30,14 @@ public class User implements IObserver, Runnable
 	 * @param firstName
 	 *            the firstName to set
 	 */
-	public void setFirstName(String firstName)
-	{
+	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 
 	/**
 	 * @return the lastName
 	 */
-	public String getLastName()
-	{
+	public String getLastName() {
 		return lastName;
 	}
 
@@ -47,8 +45,7 @@ public class User implements IObserver, Runnable
 	 * @param lastName
 	 *            the lastName to set
 	 */
-	public void setLastName(String lastName)
-	{
+	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 
@@ -59,8 +56,7 @@ public class User implements IObserver, Runnable
 	/**
 	 * @return the acces
 	 */
-	public boolean isAcces()
-	{
+	public boolean isAcces() {
 		return acces;
 	}
 
@@ -68,16 +64,14 @@ public class User implements IObserver, Runnable
 	 * @param acces
 	 *            the acces to set
 	 */
-	public void setAcces(boolean acces)
-	{
+	public void setAcces(boolean acces) {
 		this.acces = acces;
 	}
 
 	/**
 	 * @return the frequency
 	 */
-	public double getFrequency()
-	{
+	public double getFrequency() {
 		return frequency;
 	}
 
@@ -85,8 +79,7 @@ public class User implements IObserver, Runnable
 	 * @param frequency
 	 *            the frequency to set
 	 */
-	private void setFrequency(double frequency)
-	{
+	private void setFrequency(double frequency) {
 		this.frequency = frequency;
 	}
 
@@ -96,8 +89,7 @@ public class User implements IObserver, Runnable
 	 * @param lastName
 	 * @param firstName
 	 */
-	public User(boolean acces, double frequency, String lastName, String firstName)
-	{
+	public User(boolean acces, double frequency, String lastName, String firstName) {
 		super();
 		this.acces = acces;
 		this.frequency = frequency;
@@ -106,21 +98,31 @@ public class User implements IObserver, Runnable
 	}
 
 	@Override
-	public void handleNotification(double frequency)
-	{
+	public void handleNotification(double frequency) {
 		setFrequency(frequency);
 
 	}
 
-	public String toString()
-	{
-		String beschrijving = firstName + " " + lastName + " " + frequency +" " +isAcces() + "\n";
+	public String toString() {
+		String beschrijving = firstName + " " + lastName + " " + frequency + " " + isAcces() + "\n";
 		return beschrijving;
+	}
+
+	private double tryGate() {
+		return getFrequency();
 	}
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
+		double a;
+		try {
+			a = tryGate();
+			Thread.sleep(30000);
+			System.out.println("Hallo 2");
+
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		
 	}
 }
