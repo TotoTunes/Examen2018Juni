@@ -2,6 +2,8 @@ package view;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
@@ -41,6 +43,7 @@ public class AfstandsbedieningTest extends JComponent
 	{
 
 		int r = 1;
+		Executor executor = Executors.newCachedThreadPool();
 		IDModule module = new IDModule();
 		try
 		{
