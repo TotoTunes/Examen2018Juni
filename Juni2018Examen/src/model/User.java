@@ -1,5 +1,8 @@
 package model;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 /**
  * @author Thomas Vanden Bossche
  * @date 14 mei. 2018
@@ -18,7 +21,7 @@ public class User implements IObserver, Runnable {
 	private double frequency;
 	private String lastName;
 	private String firstName;
-	private IDModule module; 
+	private IDModule module;
 
 	/**
 	 * @return the module
@@ -28,7 +31,8 @@ public class User implements IObserver, Runnable {
 	}
 
 	/**
-	 * @param module the module to set
+	 * @param module
+	 *            the module to set
 	 */
 	public void setModule(IDModule module) {
 		this.module = module;
@@ -123,13 +127,20 @@ public class User implements IObserver, Runnable {
 		return beschrijving;
 	}
 
-
-
 	@Override
 	public void run() {
-		if (getModule() == null) {
-			
+		try {
+			synchronized (module) {
+				module.openGate(this);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
+
 	}
 }
