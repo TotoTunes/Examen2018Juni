@@ -12,6 +12,8 @@ import java.util.Properties;
 
 import javax.swing.JOptionPane;
 
+import org.apache.logging.log4j.core.lookup.MainMapLookup;
+
 import com.mysql.jdbc.Statement;
 
 import model.User;
@@ -84,7 +86,7 @@ public class DAO {
 			String achternaam = resultSet.getString("achternaam");
 			double frequency = resultSet.getDouble("frequency");
 			boolean acces = resultSet.getBoolean("acces");
-			user = new User(acces, frequency, achternaam, voornaam);
+			user = new User(acces, frequency, achternaam, voornaam, null);
 			personen.add(user);
 		}
 		statement.close();

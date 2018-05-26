@@ -18,6 +18,21 @@ public class User implements IObserver, Runnable {
 	private double frequency;
 	private String lastName;
 	private String firstName;
+	private IDModule module; 
+
+	/**
+	 * @return the module
+	 */
+	public IDModule getModule() {
+		return module;
+	}
+
+	/**
+	 * @param module the module to set
+	 */
+	public void setModule(IDModule module) {
+		this.module = module;
+	}
 
 	/**
 	 * @return the firstName
@@ -89,7 +104,7 @@ public class User implements IObserver, Runnable {
 	 * @param lastName
 	 * @param firstName
 	 */
-	public User(boolean acces, double frequency, String lastName, String firstName) {
+	public User(boolean acces, double frequency, String lastName, String firstName, IDModule module) {
 		super();
 		this.acces = acces;
 		this.frequency = frequency;

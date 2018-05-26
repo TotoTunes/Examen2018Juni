@@ -6,6 +6,7 @@ import java.util.Random;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import model.IDModule;
 import model.User;
 
 /**
@@ -20,12 +21,13 @@ public class UserTest
 {
 	private static User user;
 	private static Random random;
+	private static IDModule module;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception
 	{
 		random = new Random();
-		user = new User(random.nextBoolean(), 205.13, "Taelemans", "Bart");
+		user = new User(random.nextBoolean(), 205.13, "Taelemans", "Bart",module);
 	}
 
 	@Test

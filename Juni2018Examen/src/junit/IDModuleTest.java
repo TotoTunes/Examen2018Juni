@@ -30,7 +30,7 @@ public class IDModuleTest
 	{
 		iDModule = new IDModule();
 		new Random();
-		user = new User(true, 802.11, "Vanden bossche", "Thomas");
+		user = new User(true, 802.11, "Vanden bossche", "Thomas", iDModule);
 	}
 
 	@Test
