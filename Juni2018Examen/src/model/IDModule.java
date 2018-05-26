@@ -151,19 +151,27 @@ public class IDModule implements ISubject  {
 	}
 
 	@Override
-	public void openGate(User user) throws SQLException, IOException {
+	public String openGate(User user) throws SQLException, IOException {
+		String d = " ";
 		if (user.getFrequency() == permittedFrequency && user.isAcces() == true) {
-			JOptionPane.showMessageDialog(null, "Poort Open " + user.getFirstName() + " " + user.getLastName());
+			d = "Poort Open " + user.getFirstName() + " " + user.getLastName();
+			//JOptionPane.showMessageDialog(null, "Poort Open " + user.getFirstName() + " " + user.getLastName());
 		}
 		if (user.getFrequency() != permittedFrequency && user.isAcces() == true) {
 			updateObserver(permittedFrequency, user);
-			JOptionPane.showMessageDialog(null,
-					"Poort Open en frequency updated " + user.getFirstName() + " " + user.getLastName());
+			
+			d = "Poort Open en frequency updated " + user.getFirstName() + " " + user.getLastName();
+			
+//			JOptionPane.showMessageDialog(null,	"Poort Open en frequency updated " + user.getFirstName() + " " + user.getLastName());
 		}
 		if (user.getFrequency() != permittedFrequency && user.isAcces() == false) {
-			JOptionPane.showMessageDialog(null, "Acces denied " + user.getFirstName() + " " + user.getLastName());
+			d = "Acces denied " + user.getFirstName() + " " + user.getLastName();
+			//JOptionPane.showMessageDialog(null, "Acces denied " + user.getFirstName() + " " + user.getLastName());
+			
 		}
+		return d;
 	}
+	
 
 	public String toString(User user) {
 		String beschrijving = "Ik ben " + user.getFirstName() + " " + user.getLastName() + " ( Frequency "

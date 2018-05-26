@@ -22,5 +22,5 @@ public interface ISubject
 
 	void notifyAll(ArrayList<User> arrayList) throws SQLException, IOException;
 
-	void openGate(User user) throws SQLException, IOException;
+	String openGate(User user) throws SQLException, IOException;
 }

@@ -2,8 +2,14 @@ package view;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.concurrent.Callable;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
 
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
@@ -12,6 +18,7 @@ import model.User;
 import utilities.Generator;
 
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.util.ExecutorServices;
 import org.junit.validator.PublicClassValidator;
 import org.apache.logging.log4j.LogManager;
 
@@ -41,12 +48,14 @@ public class AfstandsbedieningTest extends JComponent {
 	// mooie exit uit het programma maken 
 
 	public final static Logger LOGGER = LogManager.getLogger(AfstandsbedieningTest.class.getName());
+
 	static IDModule module;
 
-	public static void main(String[] args) throws IOException, SQLException {
+	@SuppressWarnings("unchecked")
+	public static <V, T> void main(String[] args) throws IOException, SQLException {
 
 		int r = 1;
-		Executor executor = Executors.newCachedThreadPool();
+		ExecutorService executor = Executors.newCachedThreadPool();
 
 		module = new IDModule();
 		try {
@@ -77,7 +86,19 @@ public class AfstandsbedieningTest extends JComponent {
 					break;
 				// Poort openen
 				case 5:
-					poortOpenen();
+					String gString =JOptionPane.showInputDialog("1: Users willekeurig poort laten openen /n 2: specifieke user kiezen");
+					int f = Integer.parseInt(gString);
+					if(f== 2) {
+						poortOpenen();	
+					}
+					if (f==1) {
+						for (User  user : module.getUserList()) {
+							executor.execute(user);	
+						}
+						
+					}
+					
+					
 					break;
 				// alle users tonen
 				case 6:

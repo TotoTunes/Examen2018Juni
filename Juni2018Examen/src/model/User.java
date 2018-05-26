@@ -3,6 +3,8 @@ package model;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import utilities.Generator;
+
 /**
  * @author Thomas Vanden Bossche
  * @date 14 mei. 2018
@@ -129,18 +131,28 @@ public class User implements IObserver, Runnable {
 
 	@Override
 	public void run() {
-		try {
-			synchronized (module) {
+		synchronized (module) {
+			try {
+
+				Thread.sleep(5000);
+				System.out.println(getFirstName() + " " + getLastName() + " " + getFrequency() + " " + isAcces()
+						+ " is added to the threadpool");
+
 				module.openGate(this);
+				module.setPermittedFrequency(Generator.Randomfrequency());
+				double freq = module.getPermittedFrequency();
+				System.out.println("Nieuwe Frequentie " + freq);
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-
 	}
 }
