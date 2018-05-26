@@ -122,6 +122,8 @@ public class AfstandsbedieningTest extends JComponent {
 			User userToChange = module.GetSpecificUser(g - 1, module.getSearch());
 			if (userToChange.isAcces() == true) {
 				module.removeObserver(userToChange);
+				int i = JOptionPane.showConfirmDialog(null, "Test OptionPane", "TEST", JOptionPane.YES_NO_OPTION);
+				System.out.println(i);
 				JOptionPane.showMessageDialog(null, "De gebruiker heeft geen toegang meer");
 				LOGGER.info("Volgende gebruiker is gedeactiveerd: " + userToChange.toString() + System.lineSeparator());
 

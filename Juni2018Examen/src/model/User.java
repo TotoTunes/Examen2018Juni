@@ -123,20 +123,12 @@ public class User implements IObserver, Runnable {
 		return beschrijving;
 	}
 
-	private double tryGate() {
-		return getFrequency();
-	}
+
 
 	@Override
 	public void run() {
-		double a;
-		try {
-			a = tryGate();
-			Thread.sleep(30000);
-			System.out.println("Hallo 2");
-
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		if (getModule() == null) {
+			
 		}
 		
 	}

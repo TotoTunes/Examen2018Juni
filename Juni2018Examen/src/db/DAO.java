@@ -16,6 +16,7 @@ import org.apache.logging.log4j.core.lookup.MainMapLookup;
 
 import com.mysql.jdbc.Statement;
 
+import model.IDModule;
 import model.User;
 
 /**
@@ -75,7 +76,7 @@ public class DAO {
 		return connection;
 	}
 
-	public ArrayList<User> loadUserFromDB() throws IOException, SQLException {
+	public ArrayList<User> loadUserFromDB(IDModule module) throws IOException, SQLException {
 		conn = ConnectDB();
 		Statement statement = (Statement) conn.createStatement();
 		ResultSet resultSet = statement.executeQuery(Query);
@@ -86,7 +87,7 @@ public class DAO {
 			String achternaam = resultSet.getString("achternaam");
 			double frequency = resultSet.getDouble("frequency");
 			boolean acces = resultSet.getBoolean("acces");
-			user = new User(acces, frequency, achternaam, voornaam, null);
+			user = new User(acces, frequency, achternaam, voornaam, module);
 			personen.add(user);
 		}
 		statement.close();

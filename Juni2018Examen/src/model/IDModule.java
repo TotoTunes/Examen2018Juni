@@ -114,7 +114,7 @@ public class IDModule implements ISubject  {
 	public IDModule() throws IOException, SQLException {
 		super();
 		setDb(new DAO());
-		UserList = db.loadUserFromDB();
+		UserList = db.loadUserFromDB(this);
 
 		if (UserList.isEmpty() == true) {
 
