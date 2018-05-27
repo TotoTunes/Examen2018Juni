@@ -116,6 +116,7 @@ public class User implements IObserver, Runnable {
 		this.frequency = frequency;
 		this.lastName = lastName.toUpperCase();
 		this.firstName = firstName.toUpperCase();
+		this.module = module;
 	}
 
 	@Override
@@ -134,24 +135,18 @@ public class User implements IObserver, Runnable {
 		synchronized (module) {
 			try {
 
-				Thread.sleep(5000);
-				System.out.println(getFirstName() + " " + getLastName() + " " + getFrequency() + " " + isAcces()
-						+ " is added to the threadpool");
+				Thread.sleep(1000);
+				
 
-				module.openGate(this);
+				System.out.println(module.openGate(this));
 				module.setPermittedFrequency(Generator.Randomfrequency());
 				double freq = module.getPermittedFrequency();
 				System.out.println("Nieuwe Frequentie " + freq);
 
-			} catch (SQLException e) {
+			} catch (SQLException | IOException | InterruptedException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Thread.currentThread().interrupt();
+			
 			}
 		}
 	}

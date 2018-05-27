@@ -3,14 +3,9 @@ package view;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.concurrent.Callable;
-import java.util.concurrent.Executor;
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.FutureTask;
-
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import model.IDModule;
@@ -18,8 +13,6 @@ import model.User;
 import utilities.Generator;
 
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.util.ExecutorServices;
-import org.junit.validator.PublicClassValidator;
 import org.apache.logging.log4j.LogManager;
 
 /**
@@ -45,17 +38,14 @@ public class AfstandsbedieningTest extends JComponent {
 	// d.i. vanuit een geregistreerde gebruiker
 	// d.ii. vanuit een niet geregistreerde gebruiker
 
-	// mooie exit uit het programma maken 
-
 	public final static Logger LOGGER = LogManager.getLogger(AfstandsbedieningTest.class.getName());
 
-	static IDModule module;
+	private static IDModule module;
 
-	@SuppressWarnings("unchecked")
-	public static <V, T> void main(String[] args) throws IOException, SQLException {
+	public static void main(String[] args) throws IOException, SQLException {
 
-		int r = 1;
-		ExecutorService executor = Executors.newCachedThreadPool();
+		int keuze = 1;
+		Random random = new Random();
 
 		module = new IDModule();
 		try {
@@ -65,15 +55,19 @@ public class AfstandsbedieningTest extends JComponent {
 						+ "\n2. User (de)activeren " + "\n3. Frequentie poort veranderen "
 						+ "\n4. Nieuwe User invoeren " + "\n5. Poort openen " + "\n6. Toon alle users"
 						+ "\n7. Update alle afstandsbedieningen");
-				int keuze = Integer.parseInt(a);
+				keuze = Integer.parseInt(a);
 
 				switch (keuze) {
 
 				// aanmaken van willekeurige users
 				case 1:
 					usersMaken();
+					break;
 				case 2:
-					activeOrDeactive();
+					int answer = JOptionPane.showConfirmDialog(null,
+							"Wil je een willekeurige user Activeren/Deactiveren?");
+					activeOrDeactive(answer);
+
 					break;
 
 				// frequentie van de poort veranderen
@@ -86,19 +80,24 @@ public class AfstandsbedieningTest extends JComponent {
 					break;
 				// Poort openen
 				case 5:
-					String gString =JOptionPane.showInputDialog("1: Users willekeurig poort laten openen /n 2: specifieke user kiezen");
+					String gString = JOptionPane.showInputDialog(
+							"1: Users willekeurig poort laten openen" + " \n 2: specifieke user kiezen");
 					int f = Integer.parseInt(gString);
-					if(f== 2) {
-						poortOpenen();	
+					if (f == 2) {
+						poortOpenen();
 					}
-					if (f==1) {
-						for (User  user : module.getUserList()) {
-							executor.execute(user);	
+					if (f == 1) {
+						ExecutorService executor = Executors.newCachedThreadPool();
+						for (User user : module.getUserList()) {
+							System.out.println(user.getFirstName() + " " + user.getLastName() + " "
+									+ user.getFrequency() + " " + user.isAcces() + " is added to the threadpool");
+							executor.execute(user);
 						}
-						
+
+						executor.shutdown();
+						System.out.println("Executor service is shutdown");
 					}
-					
-					
+
 					break;
 				// alle users tonen
 				case 6:
@@ -109,12 +108,13 @@ public class AfstandsbedieningTest extends JComponent {
 				case 7:
 					updateAll();
 					break;
-				default:
-					System.out.println("Fout");
+				case 0:
+					JOptionPane.showConfirmDialog(null, "Wil je het programma afsluiten? ", "Quit",
+							JOptionPane.YES_NO_OPTION);
 					break;
 				}
 
-			} while (r < 2);
+			} while (keuze > 0);
 		} catch (Exception e) {
 			LOGGER.trace(e);
 		}
@@ -124,7 +124,7 @@ public class AfstandsbedieningTest extends JComponent {
 	static void usersMaken() throws IOException, SQLException {
 		StringBuffer alles = new StringBuffer();
 		for (int i = 0; i < 20; ++i) {
-			User aUser = Generator.GenerateUsers(module.getPermittedFrequency());
+			User aUser = Generator.GenerateUsers(module.getPermittedFrequency(), module);
 
 			module.addObserver(aUser);
 
@@ -135,24 +135,31 @@ public class AfstandsbedieningTest extends JComponent {
 				+ " in de database." + System.lineSeparator());
 	}
 
-	static void activeOrDeactive() throws IOException, SQLException {
-		String achternaam = JOptionPane.showInputDialog("Geef een naam in: ");
-		int g = Integer.parseInt(JOptionPane.showInputDialog(module.GetSpecificUser(achternaam)
-				+ "\n Geef het nummer in van de persoon die je wilt (de)activeren\n EXIT =0"));
-		if (g > 0) {
-			User userToChange = module.GetSpecificUser(g - 1, module.getSearch());
-			if (userToChange.isAcces() == true) {
-				module.removeObserver(userToChange);
-				int i = JOptionPane.showConfirmDialog(null, "Test OptionPane", "TEST", JOptionPane.YES_NO_OPTION);
-				System.out.println(i);
-				JOptionPane.showMessageDialog(null, "De gebruiker heeft geen toegang meer");
-				LOGGER.info("Volgende gebruiker is gedeactiveerd: " + userToChange.toString() + System.lineSeparator());
+	static void activeOrDeactive(int choice) throws IOException, SQLException {
 
-			} else {
-				module.addObserver(userToChange);
-				JOptionPane.showMessageDialog(null, "De gebruiker heeft nu toegang");
-				LOGGER.info("Volgende gebruiker is geactiveerd: " + userToChange.toString() + System.lineSeparator());
-			}
+		if (choice == 0) {
+			User usertochange = module.GetSpecificUser(choice, module.getUserList());
+			UserOutOrIn(usertochange, module.getUserList());
+		}
+		if (choice == 1) {
+			String achternaam = JOptionPane.showInputDialog("Geef een naam in: ");
+			int g = Integer.parseInt(JOptionPane.showInputDialog(module.GetSpecificUser(achternaam)
+					+ "\n Geef het nummer in van de persoon die je wilt (de)activeren\n EXIT =0"));
+			UserOutOrIn(module.GetSpecificUser(g, module.getSearch()), module.getSearch());
+		}
+
+	}
+
+	static void UserOutOrIn(User userToChange, ArrayList<User> array) throws IOException, SQLException {
+		if (userToChange.isAcces() == true) {
+			module.removeObserver(userToChange);
+			JOptionPane.showMessageDialog(null, "De gebruiker heeft geen toegang meer");
+			LOGGER.info("Volgende gebruiker is gedeactiveerd: " + userToChange.toString() + System.lineSeparator());
+
+		} else {
+			module.addObserver(userToChange);
+			JOptionPane.showMessageDialog(null, "De gebruiker heeft nu toegang");
+			LOGGER.info("Volgende gebruiker is geactiveerd: " + userToChange.toString() + System.lineSeparator());
 		}
 	}
 

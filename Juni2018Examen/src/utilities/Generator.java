@@ -4,6 +4,7 @@ package utilities;
 import java.util.ArrayList;
 import java.util.Random;
 
+import model.IDModule;
 import model.User;
 
 /**
@@ -59,9 +60,9 @@ public class Generator
 	// alles random gemaakt zodat we daarna kunnen zien of het programma de juiste
 	// handelingen uitvoert
 
-	public static User GenerateUsers(double frequency)
+	public static User GenerateUsers(double frequency, IDModule module)
 	{
-		User aUser = new User(rand.nextBoolean(), Randomfrequency(), GenerateAchternaam(), GenerateVoornaam(), null);
+		User aUser = new User(rand.nextBoolean(), Randomfrequency(), GenerateAchternaam(), GenerateVoornaam(), module);
 		return aUser;
 	}
 

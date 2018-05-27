@@ -12,8 +12,6 @@ import java.util.Properties;
 
 import javax.swing.JOptionPane;
 
-import org.apache.logging.log4j.core.lookup.MainMapLookup;
-
 import com.mysql.jdbc.Statement;
 
 import model.IDModule;
@@ -125,10 +123,10 @@ public class DAO {
 		statement.close();
 	}
 
-	public void updateDB(double frequency) throws SQLException, IOException {
+	public void updateDB(User user) throws SQLException, IOException {
 		conn = ConnectDB();
 		Statement statement = (Statement) conn.createStatement();
-		String update = "UPDATE bewoners SET frequency = " + frequency + " WHERE acces= 1";
+		String update = "UPDATE bewoners SET frequency = " + user.getFrequency() + " WHERE acces= 1 AND voornaam="+user.getFirstName()+"AND achternaam ="+user.getLastName();
 		statement.execute(update);
 		statement.close();
 	}

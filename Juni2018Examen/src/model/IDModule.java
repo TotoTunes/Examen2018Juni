@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
 import db.DAO;
 import utilities.Generator;
 
@@ -94,7 +92,7 @@ public class IDModule implements ISubject  {
 	public void updateObserver(double frequency, User user) throws SQLException, IOException {
 		if (user.isAcces() == true) {
 			user.handleNotification(frequency);
-			db.updateDB(frequency);
+			db.updateDB(user);
 		}
 	}
 
@@ -107,6 +105,7 @@ public class IDModule implements ISubject  {
 	}
 
 	/**
+	 * @param module 
 	 * @param userList
 	 * @throws SQLException
 	 * @throws IOException
@@ -154,18 +153,18 @@ public class IDModule implements ISubject  {
 	public String openGate(User user) throws SQLException, IOException {
 		String d = " ";
 		if (user.getFrequency() == permittedFrequency && user.isAcces() == true) {
-			d = "Poort Open " + user.getFirstName() + " " + user.getLastName();
+			d = "Poort Open " + user.getFirstName() + " " + user.getLastName()+ " "+getPermittedFrequency();
 			//JOptionPane.showMessageDialog(null, "Poort Open " + user.getFirstName() + " " + user.getLastName());
 		}
 		if (user.getFrequency() != permittedFrequency && user.isAcces() == true) {
 			updateObserver(permittedFrequency, user);
 			
-			d = "Poort Open en frequency updated " + user.getFirstName() + " " + user.getLastName();
+			d = "Poort Open en frequency updated " + user.getFirstName() + " " + user.getLastName()+ " "+getPermittedFrequency();
 			
 //			JOptionPane.showMessageDialog(null,	"Poort Open en frequency updated " + user.getFirstName() + " " + user.getLastName());
 		}
 		if (user.getFrequency() != permittedFrequency && user.isAcces() == false) {
-			d = "Acces denied " + user.getFirstName() + " " + user.getLastName();
+			d = "Acces denied " + user.getFirstName() + " " + user.getLastName() + " "+getPermittedFrequency();
 			//JOptionPane.showMessageDialog(null, "Acces denied " + user.getFirstName() + " " + user.getLastName());
 			
 		}
@@ -175,7 +174,7 @@ public class IDModule implements ISubject  {
 
 	public String toString(User user) {
 		String beschrijving = "Ik ben " + user.getFirstName() + " " + user.getLastName() + " ( Frequency "
-				+ user.getFrequency() + ", Toegang " + user.isAcces() + " )";
+				+ user.getFrequency() + ", Toegang " + user.isAcces() + " "+user.getModule()+" )";
 		return beschrijving;
 	}
 
