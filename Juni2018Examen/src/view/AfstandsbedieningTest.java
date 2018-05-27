@@ -96,7 +96,7 @@ public class AfstandsbedieningTest extends JComponent {
 							executor.execute(user);
 						}
 
-						executor.shutdown();
+//						executor.shutdown();
 						System.out.println("Executor service is shutdown");
 					}
 
