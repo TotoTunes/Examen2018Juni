@@ -54,7 +54,7 @@ public class AfstandsbedieningTest extends JComponent {
 				String a = JOptionPane.showInputDialog("Geef je keuze in: " + "\n1. Willekeurige users maken"
 						+ "\n2. User (de)activeren " + "\n3. Frequentie poort veranderen "
 						+ "\n4. Nieuwe User invoeren " + "\n5. Poort openen " + "\n6. Toon alle users"
-						+ "\n7. Update alle afstandsbedieningen");
+						+ "\n7. Update alle afstandsbedieningen"+"\n0. Afsluiten");
 				keuze = Integer.parseInt(a);
 
 				switch (keuze) {
@@ -82,12 +82,14 @@ public class AfstandsbedieningTest extends JComponent {
 				case 5:
 					String gString = JOptionPane.showInputDialog(
 							"1: Users willekeurig poort laten openen" + " \n 2: specifieke user kiezen");
+					ExecutorService executor = Executors.newCachedThreadPool();
 					int f = Integer.parseInt(gString);
 					if (f == 2) {
-						poortOpenen();
+						User gebruiker2 = poortOpenen();
+						executor.execute(gebruiker2);
 					}
 					if (f == 1) {
-						ExecutorService executor = Executors.newCachedThreadPool();
+						
 						for (User user : module.getUserList()) {
 							System.out.println(user.getFirstName() + " " + user.getLastName() + " "
 									+ user.getFrequency() + " " + user.isAcces() + " is added to the threadpool");
@@ -109,8 +111,12 @@ public class AfstandsbedieningTest extends JComponent {
 					updateAll();
 					break;
 				case 0:
-					JOptionPane.showConfirmDialog(null, "Wil je het programma afsluiten? ", "Quit",
+					int yes = JOptionPane.showConfirmDialog(null, "Wil je het programma afsluiten? ", "Quit",
 							JOptionPane.YES_NO_OPTION);
+					if (yes == 1) {
+						++keuze;
+					}
+
 					break;
 				}
 
@@ -177,17 +183,17 @@ public class AfstandsbedieningTest extends JComponent {
 		LOGGER.info("Volgende gebruiker is toegevoegd: " + firstname + " " + lastname + System.lineSeparator());
 	}
 
-	static void poortOpenen() throws SQLException, IOException {
+	static User poortOpenen() throws SQLException, IOException {
 		String achternaam1 = JOptionPane.showInputDialog("Geef een naam in: ");
 		int g1 = Integer.parseInt(JOptionPane.showInputDialog(module.GetSpecificUser(achternaam1)
 				+ "\n Geef het nummer in van de persoon die je wilt verwijderen\n EXIT =0"));
+		User aUser = null;
 		if (g1 > 0) {
-			User aUser = module.GetSpecificUser(g1 - 1, module.getSearch());
-			module.openGate(aUser);
+			aUser = module.GetSpecificUser(g1 - 1, module.getSearch());
 			LOGGER.info("Volgende gebruiker was aan de poort: " + aUser.toString() + System.lineSeparator());
 
 		} // uit db
-
+		return aUser;
 	}
 
 	static void updateAll() throws SQLException, IOException {

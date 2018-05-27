@@ -69,8 +69,7 @@ public class IDModule implements ISubject  {
 		UserList = userList;
 	}
 
-	// synchronized methods omdat arraylist mutable is en zo worden er geen foute
-	// gegevens uitgelezen
+
 	@Override
 	public void removeObserver(User user) throws IOException, SQLException {
 		user.setAcces(false);
