@@ -135,7 +135,7 @@ public class User implements IObserver, Runnable {
 		synchronized (module) {
 			try {
 
-				Thread.sleep(1000);
+				Thread.sleep(500);
 				module.setPermittedFrequency(Generator.Randomfrequency());
 				System.out.println(module.getPermittedFrequency());
 
