@@ -199,6 +199,7 @@ public class AfstandsbedieningTest extends JComponent {
 		String lastname = JOptionPane.showInputDialog("Geef de achternaam in");
 		String firstname = JOptionPane.showInputDialog("Geef de voornaam in");
 		module.addObserver(new User(true, module.getPermittedFrequency(), lastname, firstname, module));
+		JOptionPane.showMessageDialog(null, "De gebruiker is toegevoegd: " + firstname + " " + lastname);
 		LOGGER.info("Volgende gebruiker is toegevoegd: " + firstname + " " + lastname + System.lineSeparator());
 	}
 
