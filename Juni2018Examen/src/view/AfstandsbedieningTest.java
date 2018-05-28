@@ -125,13 +125,20 @@ public class AfstandsbedieningTest extends JComponent {
 				}
 
 			} while (keuze > 0);
-		} catch (NumberFormatException e) {
+		} 
+		catch (NumberFormatException e) {
+			int condition = JOptionPane.showConfirmDialog(null, "Wil je het programma afsluiten? ", "Quit", JOptionPane.YES_NO_OPTION);
+			if (condition == 1) {
+				main(null);
+			}
+			
 
+		} 
+		catch (NullPointerException e) {
+			;
 			main(null);
-
-		} catch (NullPointerException e) {
-			main(null);
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			LOGGER.trace(e);
 		}
 	}

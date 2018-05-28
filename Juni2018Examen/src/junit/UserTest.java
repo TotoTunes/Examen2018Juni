@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Random;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -17,8 +16,6 @@ import org.junit.Test;
 
 import model.IDModule;
 import model.User;
-import utilities.Generator;
-import view.AfstandsbedieningTest;
 
 /**
  * @author Thomas Vanden Bossche

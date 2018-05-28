@@ -4,12 +4,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import db.DAO;
 import utilities.Generator;
-import view.AfstandsbedieningTest;
 
 /**
  * @author Thomas Vanden Bossche
@@ -27,7 +23,7 @@ public class IDModule implements ISubject {
 	// Db object in deze klasse omdat men dan niet via de view aan de DB
 	// functionaliteit kan. enkel de IDmodule moet dat kunnen
 	private DAO db;
-	public final static Logger LOGGER = LogManager.getLogger(IDModule.class.getName());
+
 	/**
 	 * @return the search
 	 */
@@ -153,7 +149,7 @@ public class IDModule implements ISubject {
 
 	@Override
 	public void openGate(User user) throws SQLException, IOException {
-		
+
 		if (user.getFrequency() == permittedFrequency && user.isAcces() == true) {
 			System.out.println("Poort Open " + user.getFirstName() + " " + user.getLastName());
 		}
@@ -164,7 +160,7 @@ public class IDModule implements ISubject {
 		if (user.getFrequency() != permittedFrequency && user.isAcces() == false) {
 			System.out.println("Acces denied " + user.getFirstName() + " " + user.getLastName());
 		}
-		setPermittedFrequency(Generator.Randomfrequency());
+
 	}
 
 	public String toString(User user) {
