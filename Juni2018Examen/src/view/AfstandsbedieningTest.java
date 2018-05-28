@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import model.IDModule;
@@ -41,11 +43,12 @@ public class AfstandsbedieningTest extends JComponent {
 	public final static Logger LOGGER = LogManager.getLogger(AfstandsbedieningTest.class.getName());
 
 	private static IDModule module;
+	private static Random random;
 
 	public static void main(String[] args) throws IOException, SQLException {
 
 		int keuze = 1;
-		Random random = new Random();
+		random = new Random();
 
 		module = new IDModule();
 		try {
@@ -54,7 +57,7 @@ public class AfstandsbedieningTest extends JComponent {
 				String a = JOptionPane.showInputDialog("Geef je keuze in: " + "\n1. Willekeurige users maken"
 						+ "\n2. User (de)activeren " + "\n3. Frequentie poort veranderen "
 						+ "\n4. Nieuwe User invoeren " + "\n5. Poort openen " + "\n6. Toon alle users"
-						+ "\n7. Update alle afstandsbedieningen"+"\n0. Afsluiten");
+						+ "\n7. Update alle afstandsbedieningen" + "\n0. Afsluiten");
 				keuze = Integer.parseInt(a);
 
 				switch (keuze) {
@@ -84,22 +87,23 @@ public class AfstandsbedieningTest extends JComponent {
 							"1: Users willekeurig poort laten openen" + " \n 2: specifieke user kiezen");
 					ExecutorService executor = Executors.newCachedThreadPool();
 					int f = Integer.parseInt(gString);
-					if (f == 2) {
-						User gebruiker2 = poortOpenen();
-						executor.execute(gebruiker2);
-					}
 					if (f == 1) {
-						
 						for (User user : module.getUserList()) {
-							System.out.println(user.getFirstName() + " " + user.getLastName() + " "
-									+ user.getFrequency() + " " + user.isAcces() + " is added to the threadpool");
+							System.out.println(user.toString() + " is toegevoegd aan de threadpool");
 							executor.execute(user);
 						}
 
-//						executor.shutdown();
-						System.out.println("Executor service is shutdown");
 					}
+					if (f == 2) {
 
+						User gebruiker2 = poortOpenen();
+						executor.execute(gebruiker2);
+					}
+					executor.shutdown();
+					System.out.println("Executor service is shutdown");
+					if (executor.awaitTermination(60, TimeUnit.SECONDS)) {
+						System.out.println("All threads have finished");
+					}
 					break;
 				// alle users tonen
 				case 6:
@@ -110,7 +114,7 @@ public class AfstandsbedieningTest extends JComponent {
 				case 7:
 					updateAll();
 					break;
-				case 0:
+				default:
 					int yes = JOptionPane.showConfirmDialog(null, "Wil je het programma afsluiten? ", "Quit",
 							JOptionPane.YES_NO_OPTION);
 					if (yes == 1) {
@@ -121,10 +125,13 @@ public class AfstandsbedieningTest extends JComponent {
 				}
 
 			} while (keuze > 0);
-		} catch (Exception e) {
+		} catch (NumberFormatException e) {
+
+			JOptionPane.showConfirmDialog(null, "Wil je afsluiten?","Quit", JOptionPane.YES_NO_OPTION);
+		} 
+		catch (Exception e) {
 			LOGGER.trace(e);
 		}
-
 	}
 
 	static void usersMaken() throws IOException, SQLException {
@@ -144,14 +151,15 @@ public class AfstandsbedieningTest extends JComponent {
 	static void activeOrDeactive(int choice) throws IOException, SQLException {
 
 		if (choice == 0) {
-			User usertochange = module.GetSpecificUser(choice, module.getUserList());
+			User usertochange = module.GetSpecificUser(random.nextInt(module.getUserList().size()),
+					module.getUserList());
 			UserOutOrIn(usertochange, module.getUserList());
 		}
 		if (choice == 1) {
 			String achternaam = JOptionPane.showInputDialog("Geef een naam in: ");
 			int g = Integer.parseInt(JOptionPane.showInputDialog(module.GetSpecificUser(achternaam)
 					+ "\n Geef het nummer in van de persoon die je wilt (de)activeren\n EXIT =0"));
-			UserOutOrIn(module.GetSpecificUser(g, module.getSearch()), module.getSearch());
+			UserOutOrIn(module.GetSpecificUser(g - 1, module.getSearch()), module.getSearch());
 		}
 
 	}

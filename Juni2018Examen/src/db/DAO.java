@@ -108,17 +108,17 @@ public class DAO {
 		Statement statement = (Statement) conn.createStatement();
 
 		String remove = "UPDATE bewoners SET acces = '" + 0 + "' WHERE voornaam ='" + user.getFirstName()
-				+ "' AND achternaam = '" + user.getLastName()+"'";
+				+ "' AND achternaam = '" + user.getLastName() + "'";
 		statement.execute(remove);
 		statement.close();
 	}
-	
+
 	public void setAccessTrue(User user) throws IOException, SQLException {
 		conn = ConnectDB();
 		Statement statement = (Statement) conn.createStatement();
 
 		String accessTrue = "UPDATE bewoners SET acces = '" + 1 + "' WHERE voornaam ='" + user.getFirstName()
-				+ "' AND achternaam = '" + user.getLastName()+"'";
+				+ "' AND achternaam = '" + user.getLastName() + "'";
 		statement.execute(accessTrue);
 		statement.close();
 	}
@@ -126,7 +126,8 @@ public class DAO {
 	public void updateDB(User user) throws SQLException, IOException {
 		conn = ConnectDB();
 		Statement statement = (Statement) conn.createStatement();
-		String update = "UPDATE bewoners SET frequency = " + user.getFrequency() + " WHERE acces= 1 AND voornaam="+user.getFirstName()+"AND achternaam ="+user.getLastName();
+		String update = "UPDATE bewoners SET frequency = '" + user.getFrequency() + "' WHERE acces= 1 AND voornaam='"
+				+ user.getFirstName() + "'AND achternaam ='" + user.getLastName() + "'";
 		statement.execute(update);
 		statement.close();
 	}

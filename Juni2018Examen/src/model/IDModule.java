@@ -15,7 +15,7 @@ import utilities.Generator;
  *
  */
 
-public class IDModule implements ISubject  {
+public class IDModule implements ISubject {
 
 	private ArrayList<User> UserList;
 	private ArrayList<User> Search;
@@ -69,7 +69,6 @@ public class IDModule implements ISubject  {
 		UserList = userList;
 	}
 
-
 	@Override
 	public void removeObserver(User user) throws IOException, SQLException {
 		user.setAcces(false);
@@ -104,7 +103,7 @@ public class IDModule implements ISubject  {
 	}
 
 	/**
-	 * @param module 
+	 * @param module
 	 * @param userList
 	 * @throws SQLException
 	 * @throws IOException
@@ -149,31 +148,23 @@ public class IDModule implements ISubject  {
 	}
 
 	@Override
-	public String openGate(User user) throws SQLException, IOException {
-		String d = " ";
+	public void openGate(User user) throws SQLException, IOException {
+		
 		if (user.getFrequency() == permittedFrequency && user.isAcces() == true) {
-			d = "Poort Open " + user.getFirstName() + " " + user.getLastName()+ " "+getPermittedFrequency();
-			//JOptionPane.showMessageDialog(null, "Poort Open " + user.getFirstName() + " " + user.getLastName());
+			System.out.println("Poort Open " + user.getFirstName() + " " + user.getLastName());
 		}
 		if (user.getFrequency() != permittedFrequency && user.isAcces() == true) {
 			updateObserver(permittedFrequency, user);
-			
-			d = "Poort Open en frequency updated " + user.getFirstName() + " " + user.getLastName()+ " "+getPermittedFrequency();
-			
-//			JOptionPane.showMessageDialog(null,	"Poort Open en frequency updated " + user.getFirstName() + " " + user.getLastName());
+			System.out.println("Poort Open en frequency updated " + user.getFirstName() + " " + user.getLastName());
 		}
 		if (user.getFrequency() != permittedFrequency && user.isAcces() == false) {
-			d = "Acces denied " + user.getFirstName() + " " + user.getLastName() + " "+getPermittedFrequency();
-			//JOptionPane.showMessageDialog(null, "Acces denied " + user.getFirstName() + " " + user.getLastName());
-			
+			System.out.println("Acces denied " + user.getFirstName() + " " + user.getLastName());
 		}
-		return d;
 	}
-	
 
 	public String toString(User user) {
 		String beschrijving = "Ik ben " + user.getFirstName() + " " + user.getLastName() + " ( Frequency "
-				+ user.getFrequency() + ", Toegang " + user.isAcces() + " "+user.getModule()+" )";
+				+ user.getFrequency() + ", Toegang " + user.isAcces() + " " + user.getModule() + " )";
 		return beschrijving;
 	}
 

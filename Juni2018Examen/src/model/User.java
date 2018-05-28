@@ -3,8 +3,6 @@ package model;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import utilities.Generator;
-
 /**
  * @author Thomas Vanden Bossche
  * @date 14 mei. 2018
@@ -135,16 +133,16 @@ public class User implements IObserver, Runnable {
 		synchronized (module) {
 			try {
 
-				Thread.sleep(1000);
+				Thread.sleep(50);
 				
 
-				System.out.println(module.openGate(this));
-				module.setPermittedFrequency(Generator.Randomfrequency());
-				double freq = module.getPermittedFrequency();
-				System.out.println("Nieuwe Frequentie " + freq);
+				module.openGate(this);
+				
 
 			} catch (SQLException | IOException | InterruptedException e) {
-				// TODO Auto-generated catch block
+				System.out.println("Interrupted");
+				System.out.println(this.toString());
+				e.printStackTrace();
 				Thread.currentThread().interrupt();
 			
 			}
