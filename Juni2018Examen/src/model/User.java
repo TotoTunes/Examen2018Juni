@@ -133,7 +133,7 @@ public class User implements IObserver, Runnable {
 		synchronized (module) {
 			try {
 
-				Thread.sleep(50);
+				Thread.sleep(1000);
 				
 
 				module.openGate(this);
