@@ -3,6 +3,12 @@ package model;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import utilities.Generator;
+import view.AfstandsbedieningTest;
+
 /**
  * @author Thomas Vanden Bossche
  * @date 14 mei. 2018
@@ -17,6 +23,7 @@ public class User implements IObserver, Runnable {
 	// Nadat het aantal verstreken is, beëindigt de gebruiker zijn activiteiten. Dus
 	// de thread sterft.
 
+	public final static Logger LOGGER = LogManager.getLogger(User.class.getName());
 	private boolean acces;
 	private double frequency;
 	private String lastName;
@@ -134,7 +141,8 @@ public class User implements IObserver, Runnable {
 			try {
 
 				Thread.sleep(1000);
-				
+
+				LOGGER.info(module.getPermittedFrequency());
 
 				module.openGate(this);
 				

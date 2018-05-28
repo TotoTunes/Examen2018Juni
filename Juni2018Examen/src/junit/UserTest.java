@@ -10,11 +10,15 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import model.IDModule;
 import model.User;
+import utilities.Generator;
+import view.AfstandsbedieningTest;
 
 /**
  * @author Thomas Vanden Bossche
@@ -29,6 +33,7 @@ public class UserTest {
 	private static Random random;
 	private static IDModule module;
 	private static ExecutorService executor;
+	public final static Logger LOGGER = LogManager.getLogger(User.class.getName());
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -47,7 +52,7 @@ public class UserTest {
 	@Test
 	public void testRun() throws IOException, SQLException {
 		executor.execute(user);
-
+		LOGGER.info("Nieuwe Frequentie: "+module.getPermittedFrequency());
 		executor.shutdown();
 		try {
 			if (executor.awaitTermination(60, TimeUnit.SECONDS)) {
@@ -59,7 +64,9 @@ public class UserTest {
 		}
 
 	}
-
-
+	@Test
+	public void testMultipleRun() {
+		
+	}
 
 }

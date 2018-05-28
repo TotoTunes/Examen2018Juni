@@ -89,7 +89,7 @@ public class AfstandsbedieningTest extends JComponent {
 					int f = Integer.parseInt(gString);
 					if (f == 1) {
 						for (User user : module.getUserList()) {
-							System.out.println(user.toString() + " is toegevoegd aan de threadpool");
+							LOGGER.info(user.toString() + " is toegevoegd aan de threadpool");
 							executor.execute(user);
 						}
 
@@ -127,9 +127,11 @@ public class AfstandsbedieningTest extends JComponent {
 			} while (keuze > 0);
 		} catch (NumberFormatException e) {
 
-			JOptionPane.showConfirmDialog(null, "Wil je afsluiten?","Quit", JOptionPane.YES_NO_OPTION);
-		} 
-		catch (Exception e) {
+			main(null);
+
+		} catch (NullPointerException e) {
+			main(null);
+		} catch (Exception e) {
 			LOGGER.trace(e);
 		}
 	}
@@ -167,12 +169,14 @@ public class AfstandsbedieningTest extends JComponent {
 	static void UserOutOrIn(User userToChange, ArrayList<User> array) throws IOException, SQLException {
 		if (userToChange.isAcces() == true) {
 			module.removeObserver(userToChange);
-			JOptionPane.showMessageDialog(null, "De gebruiker heeft geen toegang meer");
+			JOptionPane.showMessageDialog(null,
+					userToChange.getFirstName() + " " + userToChange.getLastName() + " heeft geen toegang meer");
 			LOGGER.info("Volgende gebruiker is gedeactiveerd: " + userToChange.toString() + System.lineSeparator());
 
 		} else {
 			module.addObserver(userToChange);
-			JOptionPane.showMessageDialog(null, "De gebruiker heeft nu toegang");
+			JOptionPane.showMessageDialog(null,
+					userToChange.getFirstName() + " " + userToChange.getLastName() + " heeft nu toegang");
 			LOGGER.info("Volgende gebruiker is geactiveerd: " + userToChange.toString() + System.lineSeparator());
 		}
 	}

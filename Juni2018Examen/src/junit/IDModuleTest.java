@@ -1,6 +1,7 @@
 package junit;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Random;
@@ -87,7 +88,7 @@ public class IDModuleTest
 		 iDModule.openGate(user);
 		 if (user.isAcces())
 		{
-			assertEquals(iDModule.getPermittedFrequency(), user.getFrequency(), 0);
+			assertNotEquals(iDModule.getPermittedFrequency(), user.getFrequency(), 0);
 		}
 	 }
 
